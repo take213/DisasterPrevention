@@ -1,7 +1,7 @@
 {% extends 'matchingapp/base.html' %}
 {% block content %}
 
-<h2>マッチング</h2>
+<h2>マッチング成立前</h2>
 
 <div class="container text-center">
     <div class="row">
@@ -14,6 +14,8 @@
                             <th>需要先</th>
                             <th>物資</th>
                             <th>数量</th>
+                            <th></th>
+                            <th></th>
                         </tr>
                     </thead>
 
@@ -22,6 +24,8 @@
                         <td>{{demand.user}}</td>
                         <td>{{demand.item}}</td>
                         <td>{{demand.quantity}}</td>
+                        <td><a href="{% url 'edit-demand-item' demand.id %}">編集</a></td>
+                        <td><a href="{% url 'delete-demand-item' demand.id %}">削除</a></td>
                     </tr>
                     {% endfor %}
                 </table>
@@ -36,6 +40,8 @@
                             <th>供給元</th>
                             <th>物資</th>
                             <th>数量</th>
+                            <th></th>
+                            <th></th>
                         </tr>
                     </thead>
 
@@ -44,11 +50,21 @@
                         <td>{{supply.user}}</td>
                         <td>{{supply.item}}</td>
                         <td>{{supply.quantity}}</td>
+                        <td><a href="{% url 'edit-supply-item' supply.id %}">編集</a></td>
+                        <td><a href="{% url 'delete-supply-item' supply.id %}">削除</a></td>
                     </tr>
                     {% endfor %}
                 </table>
             </div>
         </div>        
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <a href='{% url "add-demand-item" %}'>需要先の追加</a>
+        </div>
+        <div class="col-md-6">
+            <a href='{% url "add-supply-item" %}'>供給元の追加</a>
+        </div>
     </div>
     <div class="row">
         <button type="button" class="btn btn-primary" onclick="startMatching()">Match</button>

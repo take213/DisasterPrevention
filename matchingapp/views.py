@@ -4,6 +4,8 @@ from django.http import HttpResponse
 from django.views.generic import TemplateView, View
 from django.http import JsonResponse
 from matchingapp.models import Supply, Demand
+from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
+from django.urls import reverse_lazy
 
 
 # マッチング画面
@@ -35,8 +37,8 @@ class UpdateDataView(View):
     def post(self, request, *args, **kwargs):
         try:
             demands = Demand.objects.filter(completed=False)
-            supplies = Supply.objects.filter(completed=False)
             for demand in demands:
+                supplies = Supply.objects.filter(completed=False)
                 for supply in supplies:
                     if demand.item == supply.item and demand.quantity <= supply.quantity:
                         demand.completed = True
@@ -50,3 +52,51 @@ class UpdateDataView(View):
             print(e)
             return JsonResponse({'status': 'error',
                                  'message': str(e)})
+
+
+class AddSupplyItem(CreateView):
+    model = Supply
+    # DBテーブルの全カラムの情報をfieldsに格納
+    fields = '__all__'
+    # 成功したときのリダイレクト先
+    success_url = reverse_lazy('matching')
+
+
+class AddDemandItem(CreateView):
+    model = Demand
+    # DBテーブルの全カラムの情報をfieldsに格納
+    fields = '__all__'
+    # 成功したときのリダイレクト先
+    success_url = reverse_lazy('matching')
+
+
+class UpdateSupplyItem(UpdateView):
+    model = Supply
+    # DBテーブルの全カラムの情報をfieldsに格納
+    fields = '__all__'
+    # 成功したときのリダイレクト先
+    success_url = reverse_lazy('matching')
+
+
+class UpdateDemandItem(UpdateView):
+    model = Demand
+    # DBテーブルの全カラムの情報をfieldsに格納
+    fields = '__all__'
+    # 成功したときのリダイレクト先
+    success_url = reverse_lazy('matching')
+
+
+class DeleteSupplyItem(DeleteView):
+    model = Supply
+    # DBテーブルの全カラムの情報をfieldsに格納
+    fields = '__all__'
+    # 成功したときのリダイレクト先
+    success_url = reverse_lazy('matching')
+
+
+class DeleteDemandItem(DeleteView):
+    model = Demand
+    # DBテーブルの全カラムの情報をfieldsに格納
+    fields = '__all__'
+    # 成功したときのリダイレクト先
+    success_url = reverse_lazy('matching')

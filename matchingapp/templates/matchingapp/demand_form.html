@@ -1,0 +1,13 @@
+{% extends 'matchingapp/base.html' %}
+{% block content %}
+
+<h2>需要先の追加</h2>
+
+<form action="" method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" value="完了">
+</form>
+
+<a href='{% url "matching" %}'>マッチングページへ</a>
+{% endblock content %}
