@@ -1,0 +1,59 @@
+{% extends 'matchingapp/base.html' %}
+{% block content %}
+
+<h2>マッチング</h2>
+
+<div class="container text-center">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="content-box">
+                <h3>需要</h3>
+                <table class="table table-striped table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>需要先</th>
+                            <th>物資</th>
+                            <th>数量</th>
+                        </tr>
+                    </thead>
+
+                    {% for demand in demands %}
+                    <tr>
+                        <td>{{demand.user}}</td>
+                        <td>{{demand.item}}</td>
+                        <td>{{demand.quantity}}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="content-box">
+                <h3>供給</h3>
+                <table class="table table-striped table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>供給元</th>
+                            <th>物資</th>
+                            <th>数量</th>
+                        </tr>
+                    </thead>
+
+                    {% for supply in supplies %}
+                    <tr>
+                        <td>{{supply.user}}</td>
+                        <td>{{supply.item}}</td>
+                        <td>{{supply.quantity}}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>        
+    </div>
+    <div class="row">
+        <button type="button" class="btn btn-primary" onclick="startMatching()">Match</button>
+    </div>
+</div>
+
+<a href='{% url "matched" %}'>マッチング成立済みページへ</a>
+{% endblock content %}
